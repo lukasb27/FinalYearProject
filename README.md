@@ -12,7 +12,7 @@ List of programs to get working:
   delayed by 'X' amount. Will advise on the route that is causing issues. 
   
   Sample text: 
-    'Your quickest route home is delayed by 'X' minutes. Due to traffic on the A46 in Coventry. I'd suggest
+    'Your quickest route home is delayed by 'X' minutes. Due to traffic on the 'Road Name' in 'City'. I'd suggest
     going a different way.'
   
   
