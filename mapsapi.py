@@ -4,7 +4,7 @@ import math
 import json
 import re
 from twilio.rest import Client
-from api import *
+from keys import *
 
 def main():
     twilioCli = Client(accountSID, authToken)
