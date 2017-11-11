@@ -5,7 +5,7 @@ List of programs to get working:
       - Reacting to time home
   - Build a skill for Alexa
   - Google Calendar API Integration. 
-  - Google Maps Integration. (Done.)
+  - Google Maps Integration. (Done, just need to tidy code and add functions)
   
   
   Google Maps Integration program is ran at 16:00 every day, checks commute home and will text the user if their commute is
