@@ -9,7 +9,7 @@ List of programs to get working:
   
   
   Google Maps Integration program is ran at 16:00 every day, checks commute home and will text the user if their commute is
-  delayed by 'X' amount. Will advise on the route that is causing issues. 
+  delayed by 'X' amount. Will advise on the route that is causing issues. Just need to tidy up code and add functions.
   
   Sample text: 
     'Your quickest route home is delayed by 'X' minutes. Due to traffic on the A46 in Coventry. I'd suggest
