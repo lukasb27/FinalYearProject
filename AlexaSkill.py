@@ -20,8 +20,7 @@ def start_skill():
 @ask.intent("YesIntent")
 def share_headlines():
     b = Bridge('192.168.0.51')
-    b.connect()
-    b.get_api()
+    b.connect().get_api()
     # print(b.get_light(3, 'on'))
     command = {'effect': 'colorloop'}
     b.set_light(3, command)

@@ -9,12 +9,16 @@
 # time.sleep(2)
 # print('stop')
 # pygame.mixer.music.pause()
+#
+#
 
-from server import server
-from client import client
+import requests
+import json
+from phue import Bridge
+from datetime import datetime
+from datetime import timedelta
 
-ip = server()
-
-print(ip)
+print(datetime.now() + timedelta(minutes=45))
+print(datetime.now())
 
 

@@ -30,7 +30,7 @@ def send_request():
 
     int_traffic, int_normal, traffic_report = severity_warning(warnings, int_normal, int_traffic)
     send_text(int_traffic, int_normal, traffic_report)
-
+    return int_traffic
 
 # Manipulate the lists and strings to form appropriate traffic report. Give the severity warning.
 def severity_warning(warnings, int_normal, int_traffic):
@@ -77,8 +77,9 @@ def send_text(int_traffic, int_normal, traffic_report):
         # Do a bit of Maths, working out the difference between normal route time and the route time with traffic.
         twilioCli = Client(accountSID, authToken)
         if int_traffic > int_normal:
-            division = str(math.ceil(((int_traffic - int_normal) / int_traffic) * 100))
+            division = int(math.ceil(((int_traffic - int_normal) / int_traffic) * 100))
             if division >= 25:
+                division = str(division)
             # Send the text message using Twilio to the client phone number.
                 text_content = 'Your normal route home is delayed by ' + division + ' minutes. ' + traffic_report[
                     0] + '. I\'d suggest going a different way.'
