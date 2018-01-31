@@ -24,8 +24,12 @@ def hello_world():
 def get_my_ip():
     ip = request.remote_addr
     # print(ip)
-    return jsonify({'ip': request.remote_addr}), 200, main(ip)
+    timer(ip)
+    return('okay')
 
+def timer(ip):
+    time.sleep(28800) #8 hours in seconds
+    main(ip)
 
 def main(ip):
     pingstatus = check_ping(ip)
@@ -35,7 +39,6 @@ def main(ip):
         time_seconds = (time_until_home - 5) * 60
         time.sleep(time_seconds)
         check_motion()
-
     else:
         print('************ \nTRYING AGAIN \n************')
         time.sleep(15)
