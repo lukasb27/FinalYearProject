@@ -13,12 +13,12 @@ folder_to_move_to = r'/Users/lukasball/Documents/keePass'
 folder = r'/Volumes/Lukas/'
 
 for file in os.listdir(folder):
-    if file.endswith(".kdbx") or  file.endswith(".kdbx_log"):
+    if file.endswith(".kdbx"):
         print(file, 'will be moved')
         fullpath = folder + file
         shutil.move(fullpath, folder_to_move_to)
-else:
-    print('Nothing to report')
+    else:
+        break
 
 
 

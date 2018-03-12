@@ -77,6 +77,16 @@ def turn_lights_on():
 @app.route("/turn_music_on", methods=["GET"])
 def turn_music_on():
     print('i just turned music on')
+    files = []
+    file_index = 0
+    for filename in os.listdir("/musicplaylist"):
+        if filename.endswith(".mp3"):
+            files.append(filename)
+    # files.sort() # do this if you want them in name order
+
+    pygame.mixer.init()
+    pygame.mixer.music.load(files[file_index])
+    pygame.mixer.music.play(15.0)
 
 
 @app.route("/turn_music_off", methods=["GET"])
