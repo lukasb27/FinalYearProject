@@ -3,4 +3,6 @@ Twilio >= 5.7.0
 requests >= 2.1
 pafy >= 0.5.3.1
 python-vlc >= 1.1.2
-
+phue >=
+flask >=
+pygame >=

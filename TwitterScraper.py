@@ -33,12 +33,7 @@ def get_tweets(api, username):
                 list = ['test', 'blah', 'foo', 'foobar', 'word', 'bad']
                 # print(now, tweet.created_at)
                 for i in list:
-                    g = i + ' day'
-                    # print(i)
-                    if  g in tweet.text.lower():
-                        print (tweet.text)
-                        return
-                    elif i in tweet.text.lower():
+                    if i in tweet.text.lower():
                         print(tweet.text)
                         return
             else:

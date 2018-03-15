@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_ask import Ask, statement, question, session
 from phue import Bridge
+import requests
 
 
 app = Flask(__name__)
@@ -37,6 +38,7 @@ def no_intent():
     command = {'effect': 'none'}
     b.set_light(3, command)
     stop_party = 'okay'
+    requests.get('http://linktoendmusichere')
     return statement(stop_party)
 
 @ask.intent("PauseIntent")
