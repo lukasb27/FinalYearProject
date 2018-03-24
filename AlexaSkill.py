@@ -14,7 +14,7 @@ def homepage():
 
 @ask.launch
 def start_skill():
-    welcome_message = 'Are you sure you want to start a disco?'
+    welcome_message = ''
     return question(welcome_message)
 
 
@@ -38,11 +38,10 @@ def no_intent():
     command = {'effect': 'none'}
     b.set_light(3, command)
     stop_party = 'okay'
-    requests.get('http://linktoendmusichere')
+    requests.get()
     return statement(stop_party)
 
-@ask.intent("PauseIntent")
-def
+
 if __name__ == '__main__':
     app.run(debug=True)
 

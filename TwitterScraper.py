@@ -7,12 +7,14 @@ from datetime import datetime
 
 
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_secret)
 
-api = tweepy.API(auth)
+def get_tweets():
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_secret)
+    username = 'lukasball27'
 
-def get_tweets(api, username):
+    api = tweepy.API(auth)
+
     now = datetime.now()
     now = now.strftime('%Y-%m-%d')
     # print(datetime.now())
@@ -25,20 +27,21 @@ def get_tweets(api, username):
         tweets = api.user_timeline(username, page = page)
 
         for tweet in tweets:
-            lol = tweet.created_at
+            lol  = tweet.created_at
             lol = lol.strftime('%Y-%m-%d')
             # print('this is a laugh', lol)
             if now == lol:
+
                 #Do processing here:
                 list = ['test', 'blah', 'foo', 'foobar', 'word', 'bad']
                 # print(now, tweet.created_at)
                 for i in list:
                     if i in tweet.text.lower():
                         print(tweet.text)
-                        return
+                        return True
             else:
                 deadend = True
-                return
+                return False
 
         if not deadend:
             page+=1
@@ -49,4 +52,4 @@ def get_tweets(api, username):
 
 
 
-get_tweets(api, "lukasball27")
+get_tweets()

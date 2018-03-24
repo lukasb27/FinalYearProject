@@ -12,7 +12,8 @@ from keys import *
 def send_request():
     # GET request to bing API
     sample = requests.get(
-        'http://dev.virtualearth.net/REST/V1/Routes/Driving?o=xml&wp.0=' + postcode_one +'&wp.1=' + postcode_two + '&avoid=minimizeTolls&key=MeG3LZS'
+        'http://dev.virtualearth.net/REST/V1/Routes/Driving?o=xml&wp.0=' + postcode_one +'&wp.1=' + postcode_two +
+        '&avoid=minimizeTolls&key=MeG3LZS'
         + 'XpGIxVRJgbYAo~1hPHwHTUWQRN5tDvlDqelg~Aq3GKZpkh6ZmOCy3Zwm_8BqWRwEePyz6mbFzcGpxbABBPHP49bbKBsDKulkBvrgB').content
     soup = bs4.BeautifulSoup(sample, "html5lib")
 
@@ -78,7 +79,7 @@ def send_text(int_traffic, int_normal, traffic_report):
         twilioCli = Client(accountSID, authToken)
         if int_traffic > int_normal:
             division = str(math.ceil(((int_traffic - int_normal) / int_traffic) * 100))
-            if division >= 25:
+            if int(division) >= 50:
             # Send the text message using Twilio to the client phone number.
                 text_content = 'Your normal route home is delayed by ' + division + ' minutes. ' + traffic_report[
                     0] + '. I\'d suggest going a different way.'
