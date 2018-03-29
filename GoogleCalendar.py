@@ -64,19 +64,22 @@ def getMeetings():
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     print('Getting the upcoming 10 events')
     eventsResult = service.events().list(
-        calendarId='lukasball27@gmail.com', timeMin=dateToday+'T10:00:00Z', timeMax=dateToday+'T20:00:00Z', maxResults=10, singleEvents=True,
+        calendarId='lukasball27@gmail.com', timeMin=dateToday+'T08:00:00Z', timeMax=dateToday+'T20:00:00Z',
+        maxResults=10, singleEvents=True,
         orderBy='startTime').execute()
     events = eventsResult.get('items', [])
 
-    i = 0
+    numberOfMeetings = 0
     if not events:
         print('No upcoming events found.')
     for event in events:
-        i += 1
+        numberOfMeetings += 1
         start = event['start'].get('dateTime', event['start'].get('date'))
         print(start, event['summary'])
 
-    return i
+
+    print(numberOfMeetings)
+    return numberOfMeetings
 
 if __name__ == '__main__':
     getMeetings()

@@ -1,11 +1,6 @@
-import tweepy
-import json
 from keys import *
-import tweepy, time
+import tweepy
 from datetime import datetime
-# Specify the account credentials in the following variables:
-
-
 
 
 def get_tweets():
@@ -17,39 +12,21 @@ def get_tweets():
 
     now = datetime.now()
     now = now.strftime('%Y-%m-%d')
-    # print(datetime.now())
-    # # print("Today's date: ", now.strftime('%Y-%m-%d'))
-    # print(now)
 
-    page = 1
-    deadend = False
     while True:
-        tweets = api.user_timeline(username, page = page)
+        tweets = api.user_timeline(username)
 
         for tweet in tweets:
-            lol  = tweet.created_at
-            lol = lol.strftime('%Y-%m-%d')
-            # print('this is a laugh', lol)
-            if now == lol:
+            tweetCreatedDate  = tweet.created_at
+            tweetCreatedDate = tweetCreatedDate.strftime('%Y-%m-%d')
+            if now == tweetCreatedDate:
 
-                #Do processing here:
-                list = ['test', 'blah', 'foo', 'foobar', 'word', 'bad']
-                # print(now, tweet.created_at)
-                for i in list:
+                # Do processing here:
+                keyWords = ['bad day', 'rubbish day', 'stressed', 'anxious', 'depressed', 'panic attack']
+                for i in keyWords:
                     if i in tweet.text.lower():
-                        print(tweet.text)
                         return True
             else:
-                deadend = True
                 return False
-
-        if not deadend:
-            page+=1
-            time.sleep(500)
-            return
-
-
-
-
 
 get_tweets()
