@@ -14,32 +14,21 @@ def homepage():
 
 @ask.launch
 def start_skill():
-    welcome_message = ''
+    welcome_message = 'Hello, would you like to relax?'
+
     return question(welcome_message)
 
 
 @ask.intent("YesIntent")
 def share_headlines():
-    b = Bridge('192.168.0.51')
-    b.connect().get_api()
-    # print(b.get_light(3, 'on'))
-    command = {'effect': 'colorloop'}
-    b.set_light(3, command)
-    party = 'lets get this party started'
-
-    return statement(party)
+    requests.get('http://40cd939b.ngrok.io/relax')
+    return statement('relaxing you now')
 
 
-@ask.intent("StopIntent")
-def no_intent():
-    b = Bridge('192.168.0.51')
-    b.connect()
-    b.get_api()
-    command = {'effect': 'none'}
-    b.set_light(3, command)
-    stop_party = 'okay'
-    requests.get()
-    return statement(stop_party)
+@ask.intent("NoIntent")
+def noIntent():
+    requests.get('https://40cd939b.ngrok.io/turn_music_off')
+    return statement('turning music off')
 
 
 if __name__ == '__main__':

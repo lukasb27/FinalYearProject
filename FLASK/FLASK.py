@@ -3,9 +3,7 @@ import json
 import os
 import time
 import pygame
-import random
 import requests
-import runtime 
 from datetime import datetime
 from TrafficChecker import send_request
 from TwitterScraper import get_tweets
@@ -15,7 +13,6 @@ from flask import Flask
 from flask import request
 from phue import Bridge
 
-from music import music_main
 
 
 
@@ -34,7 +31,7 @@ def timer(ip):
     main(ip)
 
 def main(ip):
-    runtime.LockOSThread()
+    pygame.init()
     pingstatus = check_ping(ip)
     # Ping the IP address until we no longer get a response, which means they have left the office.
     if pingstatus == 'Network Error':
@@ -101,53 +98,54 @@ def turn_lights_on():
     b.connect()
     b.get_api()
     command = {'hue': 25500, 'on': True}
-    b.set_light(2, command)
+    b.set_light(4, command)
+    turn_music_on()
+
 
 
 # Start turning music on and relaxing user
 def turn_music_on():
-    # onlyfiles = []
-    # for (dirpath, dirnames, filenames) in walk('music'):
-    #     for i in filenames:
-    #         onlyfiles.append('music/' + i)
-    #
-    # NEXT = pygame.USEREVENT + 1
-    #
-    # tracks_number = len(onlyfiles)
-    # current_track = 0
-    #
-    # pygame.init()  # need it for event loop
-    # # screen = pygame.display.set_mode((800,600)) # it can be useful to stop program
-    #
-    # pygame.mixer.init(frequency=48000)
-    #
-    # # start first track
-    # pygame.mixer.music.load(onlyfiles[current_track])
-    # pygame.mixer.music.play()
-    #
-    # # send event NEXT every time tracks ends
-    # pygame.mixer.music.set_endevent(NEXT)
-    #
-    # running = True
-    # while running:
-    #
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             running = False
-    #
-    #         elif event.type == NEXT:
-    #
-    #             # get next track (modulo number of tracks)
-    #             current_track = (current_track + 1) % tracks_number
-    #
-    #             print("Play:", onlyfiles[current_track])
-    #
-    #             pygame.mixer.music.load(onlyfiles[current_track])
-    #             pygame.mixer.music.play()
-    #
-    # pygame.quit()
-    # return 'music playing'
-    music_main()
+    songNames = []
+    for (dirpath, dirnames, filenames) in walk('music'):
+        for i in filenames:
+            songNames.append('music/' + i)
+
+    NEXT = pygame.USEREVENT + 1
+
+    tracks_number = len(songNames)
+    current_track = 0
+
+    pygame.mixer.init(frequency=48000)
+
+    # start first track
+    pygame.mixer.music.load(songNames[current_track])
+    pygame.mixer.music.play()
+
+    # send event NEXT every time tracks ends
+    pygame.mixer.music.set_endevent(NEXT)
+
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                running = False
+
+            elif event.type == NEXT:
+
+                # get next track (modulo number of tracks)
+                current_track = (current_track + 1) % tracks_number
+
+                print("Play:", songNames[current_track])
+
+                pygame.mixer.music.load(songNames[current_track])
+                pygame.mixer.music.play()
+
+    pygame.quit()
+
+
+
 # A function to allow communications with Alexa, it will turn the music off if a request is set to /turn_music_off
 @app.route("/turn_music_off", methods=["GET"])
 def turn_music_off():
@@ -157,11 +155,12 @@ def turn_music_off():
 # A function to start relaxing the user when they get home, this is contained in one function to allow easy Alexa
 @app.route("/relax", methods=["GET"])
 def relax():
-    turn_music_on()
     turn_lights_on()
 
+    return 'you\'re relaxing'
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
 
 
 
