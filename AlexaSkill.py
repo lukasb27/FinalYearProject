@@ -1,6 +1,5 @@
 from flask import Flask
-from flask_ask import Ask, statement, question, session
-from phue import Bridge
+from flask_ask import Ask, statement, question
 import requests
 
 
@@ -21,13 +20,13 @@ def start_skill():
 
 @ask.intent("YesIntent")
 def share_headlines():
-    requests.get('http://40cd939b.ngrok.io/relax')
+    requests.get('http://4f4b9b9c.ngrok.io ')
     return statement('relaxing you now')
 
 
 @ask.intent("NoIntent")
 def noIntent():
-    requests.get('https://40cd939b.ngrok.io/turn_music_off')
+    requests.get('http://4f4b9b9c.ngrok.io ')
     return statement('turning music off')
 
 

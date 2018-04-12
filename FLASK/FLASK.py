@@ -4,7 +4,7 @@ import os
 import time
 import pygame
 import requests
-from datetime import datetime
+import datetime
 from TrafficChecker import send_request
 from TwitterScraper import get_tweets
 from GoogleCalendar import getMeetings
@@ -31,7 +31,6 @@ def timer(ip):
     main(ip)
 
 def main(ip):
-    pygame.init()
     pingstatus = check_ping(ip)
     # Ping the IP address until we no longer get a response, which means they have left the office.
     if pingstatus == 'Network Error':
@@ -45,15 +44,19 @@ def main(ip):
         amountOfMeetings = getMeetings() #Runs the getMeetings function from GoogleCalendar
         now = datetime.datetime.now()
         homeTime = now.replace(hour=17, minute=25, second=0, microsecond=0)
-
+        print (homeTime, now)
         # Check the requirements for a stressed user
-        if homeTime > now: # Check if the user has left later than normal, which is defined in line 45 as 17:30
+        if now > homeTime: # Check if the user has left later than normal, which is defined in line 45 as 17:30
+            print('user is stressed')
             stressed_user()
         elif amountOfMeetings > 5: # Is the amount of meetings higher than 5?
+            print('user is stressed')
             stressed_user()
         elif get_tweets(): # Check has the user tweeted any of the keywords defined in TwitterScraper
+            print('user is stressed')
             stressed_user()
-            pass
+        else:
+            print('user is not stressed')
     else:
         # If you get a response, try again in 15 seconds (will keep trying until no response is gained)
         print('************ \nTRYING AGAIN \n************')
@@ -63,10 +66,13 @@ def main(ip):
 
 def stressed_user():
     time_until_home = send_request() #Calculate the users time home
+
     # Convert to seconds, but start checking for motion 5 mins earlier
     # This is incase the user gets home earlier than normal (but has still left work late)
+    print(time_until_home)
+    time_until_home = int(time_until_home)
     time_seconds = (time_until_home - 5) * 60
-    time.sleep(time_seconds)
+    time.sleep(time_until_home)
     check_motion() #start checking whether there is motion, I.E the user is home
 
 
